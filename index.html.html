@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boolean Logic Based Loan Pre-Screening Demo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#071321;color:#f4f7fb;line-height:1.6}
+header{min-height:100vh;display:flex;align-items:center;padding:70px 9%;background:radial-gradient(circle at 80% 20%,#183b59 0,transparent 35%),linear-gradient(135deg,#071321,#0d2035)}
+.container{max-width:1150px;margin:auto}
+.tag{display:inline-block;padding:8px 16px;border:1px solid #39c7ef;border-radius:30px;color:#63ddff;font-size:14px;font-weight:bold}
+h1{font-size:clamp(42px,7vw,78px);line-height:1.05;margin:25px 0;background:linear-gradient(90deg,#fff,#6cddff,#a18cff);-webkit-background-clip:text;color:transparent}
+header p{max-width:720px;color:#aab9c9;font-size:19px}
+.btn{display:inline-block;margin-top:28px;padding:14px 24px;background:#63ddff;color:#06111b;text-decoration:none;border-radius:10px;font-weight:bold}
+section{padding:80px 24px}
+.section-inner{max-width:1150px;margin:auto}
+.section-title{display:flex;gap:15px;align-items:center;margin-bottom:28px}
+.number{color:#63ddff;font-weight:bold}.section-title h2{font-size:34px}
+.card{background:#102238;border:1px solid #263d57;border-radius:20px;padding:30px;box-shadow:0 15px 45px #0004}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:25px}
+.info{background:#0b1a2b;padding:20px;border-radius:14px;border:1px solid #263d57}
+.info b{display:block;color:#63ddff;margin-bottom:5px}.muted{color:#9aaabd}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+label{display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid #263d57;cursor:pointer}
+label small{display:block;color:#8193a8}
+input{width:20px;height:20px;accent-color:#63ddff}
+button{width:100%;padding:14px;margin-top:22px;border:0;border-radius:10px;font-weight:bold;font-size:16px;cursor:pointer}
+.primary{background:#63ddff;color:#06111b}.secondary{background:transparent;color:#fff;border:1px solid #38516b}
+.result{min-height:430px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.icon{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:#172b42;font-size:32px;margin-bottom:18px}
+.result h2{font-size:35px;margin:5px 0}.result p{max-width:520px;color:#aab9c9}
+.approved .icon{background:#123b30;color:#55e5a3}.rejected .icon{background:#401e2a;color:#ff7186}
+.logic{margin-top:18px;padding:15px 25px;background:#071321;border:1px solid #263d57;border-radius:10px;color:#63ddff;font-family:monospace;font-size:18px}
+.formula{text-align:center;font-size:42px;color:#63ddff;font-weight:bold;padding:25px}
+.truth-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin-top:20px;min-width:550px}
+th,td{padding:13px;text-align:center;border-bottom:1px solid #263d57}
+th{color:#63ddff}.pass{color:#55e5a3;font-weight:bold}.hold{color:#ff7186;font-weight:bold}
+.tests{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.test{padding:16px;border:1px solid #263d57;border-radius:12px;background:#0b1a2b}
+.timeline{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.step{padding:20px;text-align:center;background:#102238;border:1px solid #263d57;border-radius:15px}
+.step b{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;margin:0 auto 12px;background:#17364b;color:#63ddff}
+footer{text-align:center;padding:55px 20px;color:#8193a8;border-top:1px solid #263d57}
+@media(max-width:800px){.demo,.grid{grid-template-columns:1fr}.tests{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:1fr 1fr}header{padding:55px 7%}}
+@media(max-width:500px){.tests{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+<span class="tag">EC2201 • DIGITAL LOGIC ASSIGNMENT</span>
+<h1>Boolean Logic Based<br>Loan Pre-Screening Demo</h1>
+<p>Design and demonstrate a software solution for a real-world loan pre-screening scenario using Boolean logic, truth tables, minimized logic and reproducible synthetic data.</p>
+<a class="btn" href="#demo">Launch Interactive Demo ↓</a>
+</div>
+</header>
+
+<section>
+<div class="section-inner">
+<div class="section-title"><span class="number">01</span><h2>Real-World Problem</h2></div>
+<div class="card">
+<p>Loan applications can be pre-screened using a simple rule-based digital system. In this educational prototype, four applicant conditions are converted into Boolean inputs and processed through an AND-based decision rule.</p>
+<div class="grid">
+<div class="info"><b>INPUT</b><span>Applicant conditions represented as 0 or 1.</span></div>
+<div class="info"><b>PROCESS</b><span>Boolean logic evaluates all conditions.</span></div>
+<div class="info"><b>OUTPUT</b><span>PASS or HOLD with an explanation.</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="demo">
+<div class="section-inner">
+<div class="section-title"><span class="number">02</span><h2>Interactive Pre-Screening</h2></div>
+<div class="demo">
+<div class="card">
+<h3>Applicant Inputs</h3><p class="muted">Toggle the conditions for a synthetic applicant.</p>
+<label><span><b>Stable Income</b><small>I = 1</small></span><input id="I" type="checkbox"></label>
+<label><span><b>Acceptable Credit</b><small>C = 1</small></span><input id="C" type="checkbox"></label>
+<label><span><b>Stable Employment</b><small>E = 1</small></span><input id="E" type="checkbox"></label>
+<label><span><b>Low Debt Burden</b><small>D = 1</small></span><input id="D" type="checkbox"></label>
+<button class="primary" onclick="evaluate()">Evaluate Application</button>
+<button class="secondary" onclick="randomApplicant()">Generate Synthetic Applicant</button>
+</div>
+
+<div class="card result" id="result">
+<div class="icon" id="icon">?</div>
+<span class="muted">PRE-SCREENING RESULT</span>
+<h2 id="decision">Waiting for input</h2>
+<p id="reason">Select the applicant conditions and click Evaluate Application.</p>
+<div class="logic">F = I · C · E · D</div>
+<p id="bits" style="margin-top:12px;font-family:monospace">I=0 C=0 E=0 D=0 → F=0</p>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="section-inner">
+<div class="section-title"><span class="number">03</span><h2>Boolean Logic Model</h2></div>
+<div class="grid">
+<div class="card"><h3>Assumptions</h3><ul>
+<li>1 means the condition is satisfied.</li>
+<li>0 means the condition is not satisfied.</li>
+<li>The four features are synthetic.</li>
+<li>The model is for educational demonstration only.</li>
+</ul></div>
+<div class="card" style="grid-column:span 2"><h3>Minimized Boolean Expression</h3><div class="formula">F = I · C · E · D</div><p class="muted" style="text-align:center">The AND operation produces F = 1 only when all four inputs are 1.</p></div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="section-inner">
+<div class="section-title"><span class="number">04</span><h2>Truth Table</h2></div>
+<div class="card truth-wrap">
+<p class="muted">Complete truth table for all 16 input combinations.</p>
+<table><thead><tr><th>I</th><th>C</th><th>E</th><th>D</th><th>F</th><th>Decision</th></tr></thead><tbody id="truth"></tbody></table>
+</div>
+</div>
+</section>
+
+<section>
+<div class="section-inner">
+<div class="section-title"><span class="number">05</span><h2>Test Cases</h2></div>
+<div class="card"><p class="muted">10 normal cases and 5 edge/fault cases are included for testing.</p><div class="tests" id="tests"></div></div>
+</div>
+</section>
+
+<section>
+<div class="section-inner">
+<div class="section-title"><span class="number">06</span><h2>Implementation Steps</h2></div>
+<div class="timeline">
+<div class="step"><b>1</b>Create synthetic features</div>
+<div class="step"><b>2</b>Define rules</div>
+<div class="step"><b>3</b>Construct truth table</div>
+<div class="step"><b>4</b>Minimize logic</div>
+<div class="step"><b>5</b>Implement</div>
+<div class="step"><b>6</b>Explain decisions</div>
+</div>
+</div>
+</section>
+
+<footer>
+<strong>Boolean Logic Based Loan Pre-Screening Demo</strong><br>
+EC2201 Digital Logic • Educational simulation using synthetic data
+</footer>
+
+<script>
+function evaluate(){
+ const I=document.getElementById("I").checked?1:0;
+ const C=document.getElementById("C").checked?1:0;
+ const E=document.getElementById("E").checked?1:0;
+ const D=document.getElementById("D").checked?1:0;
+ const F=I&&C&&E&&D;
+ const r=document.getElementById("result");
+ r.classList.remove("approved","rejected");
+ if(F){
+   r.classList.add("approved");
+   document.getElementById("icon").textContent="✓";
+   document.getElementById("decision").textContent="PRE-SCREEN PASS";
+   document.getElementById("reason").textContent="All four Boolean conditions are satisfied. The application passes the initial rule-based screen.";
+ }else{
+   r.classList.add("rejected");
+   document.getElementById("icon").textContent="!";
+   document.getElementById("decision").textContent="HOLD / REVIEW";
+   let failed=[];
+   if(!I)failed.push("Stable Income");
+   if(!C)failed.push("Acceptable Credit");
+   if(!E)failed.push("Stable Employment");
+   if(!D)failed.push("Low Debt Burden");
+   document.getElementById("reason").textContent="The AND rule is not satisfied. Failed condition(s): "+failed.join(", ")+".";
+ }
+ document.getElementById("bits").textContent=`I=${I} C=${C} E=${E} D=${D} → F=${F?1:0}`;
+}
+function randomApplicant(){
+ ["I","C","E","D"].forEach(x=>document.getElementById(x).checked=Math.random()>.5);
+ evaluate();
+}
+const truth=document.getElementById("truth");
+for(let n=15;n>=0;n--){
+ let I=(n>>3)&1,C=(n>>2)&1,E=(n>>1)&1,D=n&1,F=I&C&E&D;
+ truth.innerHTML+=`<tr><td>${I}</td><td>${C}</td><td>${E}</td><td>${D}</td><td class="${F?'pass':'hold'}">${F}</td><td class="${F?'pass':'hold'}">${F?'PASS':'HOLD'}</td></tr>`;
+}
+const cases=[
+["N01","1 1 1 1","PASS"],["N02","1 1 1 0","HOLD"],["N03","1 1 0 1","HOLD"],["N04","1 0 1 1","HOLD"],["N05","0 1 1 1","HOLD"],
+["N06","1 1 0 0","HOLD"],["N07","1 0 1 0","HOLD"],["N08","0 1 1 0","HOLD"],["N09","0 1 0 1","HOLD"],["N10","1 0 0 1","HOLD"],
+["E01","0 0 0 0","HOLD"],["E02","0 0 0 1","HOLD"],["E03","1 0 0 0","HOLD"],["E04","0 1 0 0","HOLD"],["E05","0 0 1 0","HOLD"]];
+const box=document.getElementById("tests");
+cases.forEach((x,i)=>box.innerHTML+=`<div class="test"><b>${x[0]} • ${i<10?'Normal':'Edge / Fault'}</b><br><span class="muted">I C E D = ${x[1]}</span><br><span class="${x[2]=='PASS'?'pass':'hold'}">${x[2]}</span></div>`);
+</script>
+</body>
+</html>
